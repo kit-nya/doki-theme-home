@@ -33,10 +33,10 @@ export function createChecksum(data: Buffer | string): string {
 }
 
 export interface StringDictionary<T> {
-  [key: string]: T;
+	[key: string]: T;
 }
 
-export const BUCKET_NAME = "doki-theme-home";
+export const BUCKET_NAME = process.env.S3_BUCKET_NAME;
 
 export const buildS3Client = () => {
   aws.config.update({ region: "us-east-1" });
