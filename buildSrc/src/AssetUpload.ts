@@ -82,7 +82,6 @@ const uploadUnsyncedAssets = (
               Bucket: BUCKET_NAME,
               Key: buildKey(filePath),
               Body: fileStream,
-              ACL: "public-read",
               ContentType: fileType?.mime
             },
             (err: any) => {
