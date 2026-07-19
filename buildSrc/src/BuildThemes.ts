@@ -60,7 +60,7 @@ function toKebabCase(str: string) {
 
 const hexToNamedColorCSSVar = Object.entries(hexToNamedIconColor)
   .reduce<StringDictionary<string>>((accum, [hex, namedColor]) => {
-    accum[hex] = `--${toKebabCase(namedColor)}`;
+    accum[hex] = `--${toKebabCase(namedColor as string)}`;
     return accum;
   }, {})
 
@@ -286,9 +286,9 @@ evaluateTemplates(
   },
   createDokiTheme
 )
-  .then(async (dokiThemes) => {
+  .then(async (dokiThemes: any[]) => {
     const themeDefinitions = dokiThemes
-      .map((dokiTheme) => {
+      .map((dokiTheme: any) => {
         const dokiDefinition = dokiTheme.definition;
         return {
           information: {
@@ -348,7 +348,7 @@ evaluateTemplates(
       });
     // write things for extension
     const dokiThemeDefinitions = themeDefinitions
-      .reduce((accum: StringDictionary<any>, definition) => {
+      .reduce((accum: StringDictionary<any>, definition: any) => {
         accum[definition.information.id] = definition;
         return accum;
       }, {});
@@ -370,7 +370,7 @@ evaluateTemplates(
     fs.writeFileSync(
       path.resolve(repoDirectory,
         "src", "lib", "DokiThemeDefinitionsLite.ts"),
-      `export default ${JSON.stringify(dokiThemes.reduce((accum: StringDictionary<any>, dokiTheme) => {
+      `export default ${JSON.stringify(dokiThemes.reduce((accum: StringDictionary<any>, dokiTheme: any) => {
           accum[dokiTheme.definition.id] = {
             a: dokiTheme.templateVariables.dokiLogoAccent,
             b: dokiTheme.templateVariables.dokiLogoAccentContrast,
@@ -382,7 +382,7 @@ evaluateTemplates(
     );
 
     const defaultTheme =
-      themeDefinitions.find(dokiTheme => dokiTheme.information.id === DEFAULT_THEME)!;
+      themeDefinitions.find((dokiTheme: any) => dokiTheme.information.id === DEFAULT_THEME)!;
 
     fs.writeFileSync(
       path.resolve(repoDirectory,
@@ -390,7 +390,7 @@ evaluateTemplates(
       buildCSSVars(defaultTheme.colors)
     );
 
-    themeDefinitions.forEach(dokiTheme => {
+    themeDefinitions.forEach((dokiTheme: any) => {
       fs.writeFileSync(
         path.resolve(repoDirectory,
           "static", "initial-styles", `${dokiTheme.information.id}.css`),
@@ -398,7 +398,7 @@ evaluateTemplates(
       );
     });
 
-    themeDefinitions.forEach(themeDef => {
+    themeDefinitions.forEach((themeDef: any) => {
       const themeDefAsString = JSON.stringify(themeDef);
       fs.writeFileSync(
         path.resolve(repoDirectory,
@@ -426,11 +426,11 @@ evaluateTemplates(
     ])
       .then(allIcons => allIcons
         .reduce((accum, next) => accum.concat(next))
-        .filter(iconPath => iconPath.endsWith('.svg'))
+        .filter((iconPath: any) => iconPath.endsWith('.svg'))
       );
 
     const svgNameToPatho = icons
-      .reduce((accum, generatedIconPath) => {
+      .reduce((accum: StringDictionary<string>, generatedIconPath: any) => {
         const svgName = generatedIconPath.substring(generatedIconPath.lastIndexOf(path.sep) + 1);
         accum[svgName] = generatedIconPath;
         return accum;
