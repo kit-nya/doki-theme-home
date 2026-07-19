@@ -16,6 +16,9 @@ jobs:
         with:
           node-version: 24
 
+      - name: Get Master Themes
+        run: bash getMasterThemes.sh
+
       - name: Install Dependencies
         run: npm install
 
