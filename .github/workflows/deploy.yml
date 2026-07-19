@@ -20,9 +20,7 @@ jobs:
         run: bash getMasterThemes.sh
 
       - name: Install Dependencies
-        run: |
-          npm install
-          cd buildSrc && npm install
+        run: npm install
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
